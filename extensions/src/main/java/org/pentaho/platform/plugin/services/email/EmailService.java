@@ -149,6 +149,9 @@ public class EmailService implements IEmailService {
     emailProperties.setProperty( "mail.smtp.starttls.enable", ObjectUtils.toString( emailConfig.isUseStartTls() ) );
     emailProperties.setProperty( "mail.smtp.auth", ObjectUtils.toString( emailConfig.isAuthenticate() ) );
     emailProperties.setProperty( "mail.smtp.ssl", ObjectUtils.toString( emailConfig.isUseSsl() ) );
+    emailProperties.setProperty( "mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+    emailProperties.setProperty( "mail.smtp.socketFactory.fallback", "false");
+    emailProperties.setProperty( "mail.smtp.socketFactory.port", ObjectUtils.toString( emailConfig.getSmtpPort() ) ); 
     emailProperties.setProperty( "mail.debug", ObjectUtils.toString( emailConfig.isDebug() ) );
 
     Session session = null;
@@ -186,6 +189,8 @@ public class EmailService implements IEmailService {
       msg.setText( messages.getString( "EmailService.MESSAGE" ) );
       msg.setHeader( "X-Mailer", "smtpsend" );
       msg.setSentDate( new Date() );
+      System.out.print(emailConfig.toString());
+      logger.info(emailConfig.toString());
       Transport.send( msg );
       sendEmailMessage = "EmailTester.SUCESS";
     } catch ( Exception e ) {

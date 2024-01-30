@@ -175,6 +175,10 @@ public class Emailer {
       props.put( "mail.smtp.starttls.enable", ObjectUtils.toString( service.getEmailConfig().isUseStartTls() ) );
       props.put( "mail.smtp.auth", ObjectUtils.toString( service.getEmailConfig().isAuthenticate() ) );
       props.put( "mail.smtp.ssl", ObjectUtils.toString( service.getEmailConfig().isUseSsl() ) );
+      props.put( "mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+      props.put( "mail.smtp.socketFactory.fallback", "false");
+      props.put( "mail.smtp.socketFactory.port", ObjectUtils.toString( service.getEmailConfig().getSmtpPort() ));
+
       props.put( "mail.smtp.quitwait", ObjectUtils.toString( service.getEmailConfig().isSmtpQuitWait() ) );
       props.put( "mail.from.default", service.getEmailConfig().getDefaultFrom() );
 
